@@ -7,5 +7,6 @@ package expression
  */
 
 class Subtraction(val expression1: Expression, val expression2: Expression) : Expression {
-    override fun getValue(): Double = expression1.getValue() - expression2.getValue();
+    override fun getValue(): Double = expression1.getValue() - expression2.getValue()
+    override fun toString(): String = expression1.toString() + "-" + expression2.toString()
 }

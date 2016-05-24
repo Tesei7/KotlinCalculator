@@ -7,5 +7,8 @@ package expression
  */
 
 interface Expression{
+    /**
+     * @return expression result
+     */
     fun getValue() : Double
 }

@@ -33,21 +33,25 @@ class SyntaxAnalyzer(val tokens: List<Token>) {
     }
 
     private fun createExpression(type: TokenType) {
-        if(stack.size<2){
-            throw Exception("Incomplete expression")
-        }
-        val e1 = stack.last()
-        val e2 = stack[stack.size - 2]
+        val lastOperands = getOperands(type)
         val expression = when (type) {
-            TokenType.PLUS -> Sum(e1, e2)
-            TokenType.MINUS -> Subtraction(e2, e1)
-            TokenType.MUL -> Multiplication(e1, e2)
-            TokenType.DEV -> Division(e2, e1)
+            TokenType.PLUS -> Sum(lastOperands[0], lastOperands[1])
+            TokenType.MINUS -> Subtraction(lastOperands[0], lastOperands[1])
+            TokenType.MUL -> Multiplication(lastOperands[0], lastOperands[1])
+            TokenType.DEV -> Division(lastOperands[0], lastOperands[1])
+            TokenType.RIGHT_PARENTHESIS -> BracketsExpression(lastOperands[0])
             else -> throw Exception("Unknown token")
         }
-        stack.remove(e1)
-        stack.remove(e2)
+        stack.removeAll(lastOperands)
         stack.add(expression)
+    }
+
+    private fun getOperands(type: TokenType): MutableList<Expression> {
+        val operandsNumber = if (type == TokenType.RIGHT_PARENTHESIS) 1 else 2
+        if (stack.size < operandsNumber) {
+            throw Exception("Incomplete expression")
+        }
+        return stack.subList(stack.size - operandsNumber, stack.size)
     }
 
 }

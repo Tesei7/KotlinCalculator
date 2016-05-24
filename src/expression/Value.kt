@@ -7,4 +7,5 @@ package expression
  */
 class Value(val v : Double) : Expression{
     override fun getValue(): Double = v;
+    override fun toString(): String = v.toString()
 }

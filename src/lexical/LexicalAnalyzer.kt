@@ -23,23 +23,19 @@ class LexicalAnalyzer(var expression: String) {
         return tokens
     }
 
+    fun Char.isDigit() = "".plus(this).matches("\\d".toRegex())
+    fun Char.isDot() = "".plus(this).matches("\\.".toRegex())
+
     private fun getNextToken(): Token {
         try {
             val c = expression[offset];
 
-            val isDigit = "".plus(c).matches("\\d".toRegex())
-            return if (isDigit) {
-                buffer = "".plus(c)
-                val offsetOfValue = offset
-                while (getNextChar() != null && "".plus(getNextChar()).matches("\\d|\\.".toRegex())) {
-                    buffer = buffer.plus(getNextChar())
-                    offset++
-                }
-                Token(TokenType.VALUE, buffer, offsetOfValue)
+            return if (c.isDigit()) {
+                readFloatLiteral(c)
             } else {
                 when (c) {
-                    '(' -> Token(TokenType.LEFT_BRACE, offset)
-                    ')' -> Token(TokenType.RIGHT_BRACE, offset)
+                    '(' -> Token(TokenType.LEFT_PARENTHESIS, offset)
+                    ')' -> Token(TokenType.RIGHT_PARENTHESIS, offset)
                     '+' -> Token(TokenType.PLUS, offset)
                     '-' -> Token(TokenType.MINUS, offset)
                     '*' -> Token(TokenType.MUL, offset)
@@ -50,6 +46,29 @@ class LexicalAnalyzer(var expression: String) {
         } finally {
             offset++
         }
+    }
+
+    private fun readFloatLiteral(c: Char): Token {
+        buffer = "".plus(c)
+        val offsetOfValue = offset
+        var wasDot = false
+        while (isNextCharIsPartOfFloatLiteral(wasDot)) {
+            val char = getNextChar()
+            buffer = buffer.plus(char)
+            if (char != null && char.isDot()) wasDot = true
+            offset++
+        }
+        return Token(TokenType.VALUE, buffer, offsetOfValue)
+    }
+
+    private fun isNextCharIsPartOfFloatLiteral(wasDot: Boolean): Boolean {
+        val nextChar = getNextChar()
+        return if (nextChar == null) {
+            false
+        } else
+            if (wasDot) nextChar.isDigit()
+            else nextChar.isDigit() || nextChar.isDot()
+
     }
 
     private fun getNextChar(): Char? {

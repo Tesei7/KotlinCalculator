@@ -20,16 +20,18 @@ class ShuntingYard(val input: List<Token>) {
                     popOperation()
                 }
                 operations.add(token)
-            } else if (token.isLeftBrace()) {
+            } else if (token.isLeftParenthesis()) {
                 operations.add(token)
-            } else if (token.isRightBrace()) {
+            } else if (token.isRightParenthesis()) {
                 var op = getOperationsTop()
-                while (op != null && !op.isLeftBrace()) {
+                while (op != null && !op.isLeftParenthesis()) {
                     popOperation()
                     op = getOperationsTop()
                 }
                 if (op != null) {
                     operations.remove(operations.last())
+                    // remember there were brackets
+                    operations.add(token)
                 }
             }
         }
@@ -44,7 +46,5 @@ class ShuntingYard(val input: List<Token>) {
         operations.remove(operations.last())
     }
 
-    private fun getOperationsTop(): Token? {
-        return if (operations.isEmpty()) null else operations.last()
-    }
+    private fun getOperationsTop(): Token? = if (operations.isEmpty()) null else operations.last()
 }

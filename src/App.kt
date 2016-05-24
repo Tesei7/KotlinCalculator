@@ -8,12 +8,12 @@ fun main(args: Array<String>) {
     val line = readLine();
 
     try {
-        if (line == null) {
-            println("Enter expression");
+        if (line == null || line.isEmpty()) {
+            println("Expression is empty");
             return;
         }
-        val result = Calculator(line).calculate();
-        println("$line = $result");
+        val expression = Calculator(line).calculate();
+        println("$expression = ${expression.getValue()}");
     } catch(t: Throwable) {
         println(t.message);
     }

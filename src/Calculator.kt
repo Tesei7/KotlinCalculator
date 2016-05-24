@@ -1,3 +1,4 @@
+import expression.Expression
 import lexical.LexicalAnalyzer
 import syntax.SyntaxAnalyzer
 
@@ -10,9 +11,11 @@ import syntax.SyntaxAnalyzer
 class Calculator(val expression: String) {
     val lexicalAnalyzer: LexicalAnalyzer = LexicalAnalyzer(expression)
 
-
-    fun calculate(): Double{
+    /**
+     * @return root expression
+     */
+    fun calculate(): Expression{
         val list = lexicalAnalyzer.analyze()
-        return SyntaxAnalyzer(list).analyze().getValue()
+        return SyntaxAnalyzer(list).analyze()
     }
 }

@@ -5,6 +5,8 @@ import lexical.Token
 import lexical.TokenType
 
 /**
+ * Expressions syntax analyzer
+ *
  * Created by Ilya on 20.05.2016.
  */
 class SyntaxAnalyzer(val tokens: List<Token>) {
@@ -37,10 +39,10 @@ class SyntaxAnalyzer(val tokens: List<Token>) {
         val e1 = stack.last()
         val e2 = stack[stack.size - 2]
         val expression = when (type) {
-            TokenType.PLUS -> Summ(e1, e2)
-            TokenType.MINUS -> Sub(e2, e1)
-            TokenType.MUL -> Mul(e1, e2)
-            TokenType.DEV -> Dev(e2, e1)
+            TokenType.PLUS -> Sum(e1, e2)
+            TokenType.MINUS -> Subtraction(e2, e1)
+            TokenType.MUL -> Multiplication(e1, e2)
+            TokenType.DEV -> Division(e2, e1)
             else -> throw Exception("Unknown token")
         }
         stack.remove(e1)

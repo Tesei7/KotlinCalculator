@@ -3,6 +3,8 @@ package lexical
 import java.util.*
 
 /**
+ * Expressions lexical analyzer
+ *
  * Created by Ilya on 20.05.2016.
  */
 
@@ -12,6 +14,9 @@ class LexicalAnalyzer(var expression: String) {
     var offset: Int = 0
     var buffer: String = ""
 
+    /**
+     * @return list of tokens
+     */
     fun analyze(): List<Token> {
         expression = expression.replace("\\s+".toRegex(), "")
         while (offset < expression.length) tokens.add(getNextToken());

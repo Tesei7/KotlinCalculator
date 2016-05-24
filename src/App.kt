@@ -1,4 +1,6 @@
 /**
+ * Application main function
+ *
  * Created by Ilya on 20.05.2016.
  */
 fun main(args: Array<String>) {

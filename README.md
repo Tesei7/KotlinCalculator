@@ -6,4 +6,4 @@ Program reads line from input and calculates expression. Expression consists of 
 This is done in 3 steps:
  * Lexical analysis
  * [Shunting yard algorithm](https://en.wikipedia.org/wiki/Shunting-yard_algorithm)
- * Building [Abstract syntax tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+ * Building expression tree

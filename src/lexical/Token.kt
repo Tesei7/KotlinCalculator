@@ -1,6 +1,8 @@
 package lexical
 
 /**
+ * Lexical token
+ *
  * Created by Ilya on 20.05.2016.
  */
 class Token(val type: TokenType, val value: String, val offset: Int) {

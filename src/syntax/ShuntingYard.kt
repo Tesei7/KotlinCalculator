@@ -3,6 +3,8 @@ package syntax
 import lexical.Token
 
 /**
+ * Realization of shunting yard algorithm for expressions calculation
+ *
  * Created by Ilya on 20.05.2016.
  */
 class ShuntingYard(val input: List<Token>) {
